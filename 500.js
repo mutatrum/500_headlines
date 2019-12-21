@@ -42,7 +42,13 @@ function getNewHeadline(content) {
 }
 
 function getHoursSinceLastTweet(content) {
-  return ((new Date() - Date.parse(content[0].created_at)) / 1000 / 60 / 60).toFixed(1);
+  var i = 0;
+  while(true) {
+    if (headlines.indexOf(content[i].text) != -1) {
+      return ((new Date() - Date.parse(content[i].created_at)) / 1000 / 60 / 60).toFixed(1);
+    }
+    i++;
+  }
 }
 
 function readHeadlines() {
