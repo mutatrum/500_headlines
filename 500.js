@@ -8,14 +8,18 @@ var params = {screen_name: '500_headlines', count: 250, trim_user: true, exclude
 twitter.get('statuses/user_timeline', params, function(error, content, response) {
   if(error) throw error;
 
-  const hoursSinceLastTweet = getHoursSinceLastTweet(content);
+  var headlines = readHeadlines();
+
+  var tweets = content.map(tweet => tweet.text);
+  
+  const hoursSinceLastTweet = getHoursSinceLastTweet(headlines, content);
 
   console.log(`last tweet ${hoursSinceLastTweet} hours ago`);
 
   if (hoursSinceLastTweet > 17.25) {
     console.log(`timeline has ${content.length} tweets`);
 
-    var headline = getNewHeadline(content);
+    var headline = getNewHeadline(tweets, headlines);
 
     console.log(`update: ${headline}`);
 
@@ -27,11 +31,7 @@ twitter.get('statuses/user_timeline', params, function(error, content, response)
   }
 });
 
-function getNewHeadline(content) {
-  var headlines = readHeadlines();
-
-  var tweets = content.map(tweet => tweet.text);
-
+function getNewHeadline(tweets, headlines) {
   while(true) {
     var n = Math.floor(Math.random() * headlines.length);
     var headline = headlines[n];
@@ -41,14 +41,13 @@ function getNewHeadline(content) {
   }
 }
 
-function getHoursSinceLastTweet(content) {
+function getHoursSinceLastTweet(headlines, content) {
   var i = 0;
-  while(true) {
-    if (headlines.indexOf(content[i].text) != -1) {
-      return ((new Date() - Date.parse(content[i].created_at)) / 1000 / 60 / 60).toFixed(1);
-    }
+  while(headlines.indexOf(content[i].text) == -1) {
+    console.log(`Skip tweet ${content[i].text}`);
     i++;
   }
+  return ((new Date() - Date.parse(content[i].created_at)) / 1000 / 60 / 60).toFixed(1);
 }
 
 function readHeadlines() {
