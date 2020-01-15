@@ -36,7 +36,7 @@ function getNewHeadline(tweets, headlines) {
     var n = Math.floor(Math.random() * headlines.length);
     var headline = headlines[n];
     var headline_hashtag = `${headline} #bitcoin`;
-    if (tweets.indexOf(headline) == -1 && tweets.indexOf(headline_hashtag)) {
+    if (tweets.indexOf(headline) == -1 && tweets.indexOf(headline_hashtag) == -1) {
       return headline_hashtag;
     }
   }
