@@ -2,6 +2,8 @@ var Twitter = require('twitter');
 var config = require('./config.js');
 var fs = require('fs');
 
+console.log(`started ${new Date().toISOString()}`);
+
 var twitter = new Twitter(config);
 
 var params = {screen_name: '500_headlines', count: 250, trim_user: true, exclude_replies: true};
@@ -29,6 +31,8 @@ twitter.get('statuses/user_timeline', params, function(error, content, response)
       console.log(`tweet id ${tweet.id}`);
     });
   }
+  
+  console.log(`finished ${new Date().toISOString()}`);
 });
 
 function getNewHeadline(tweets, headlines) {
