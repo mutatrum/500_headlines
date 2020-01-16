@@ -44,11 +44,18 @@ function getNewHeadline(tweets, headlines) {
 
 function getHoursSinceLastTweet(headlines, content) {
   var i = 0;
-  while(headlines.indexOf(content[i].text) == -1) {
+  while(headlines.indexOf(stripHashtag(content[i].text)) == -1) {
     console.log(`Skip tweet ${content[i].text}`);
     i++;
   }
   return ((new Date() - Date.parse(content[i].created_at)) / 1000 / 60 / 60).toFixed(1);
+}
+
+function stripHashtag(tweet) {
+  if (tweet.endsWith(' #bitcoin')) {
+    return tweet.substring(0, tweet.length - 9);
+  }
+  return tweet;
 }
 
 function readHeadlines() {
