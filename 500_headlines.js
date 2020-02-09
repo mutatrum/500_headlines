@@ -1,12 +1,12 @@
 require('log-timestamp');
 const cron = require('node-cron');
-var Twitter = require('twitter');
-var config = require('./config.js');
-var fs = require('fs');
+const Twitter = require('twitter');
+const config = require('./config.js');
+const fs = require('fs');
 
 (function () {
   console.log('init')
-  cron.schedule('*/30 * * * *, () => onSchedule());
+  cron.schedule('*/30 * * * *', () => onSchedule());
 })();
 
 async function onSchedule() {
