@@ -35,7 +35,7 @@ async function onSchedule() {
     
     var status = {status: headline};
     
-    var tweet = await postStatusUpdate(twitter, status);
+    var tweet = await postStatusesUpdate(twitter, status);
   
     console.log(`tweet id ${tweet.id}`);
   }
