@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "log-timestamp": "^0.3.0",
+    "node-cron": "^2.0.3",
     "twitter": "^1.7.1"
   }
 }
