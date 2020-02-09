@@ -26,22 +26,20 @@ async function onSchedule() {
   
   console.log(`last tweet ${hoursSinceLastTweet} hours ago`);
   
-  if (hoursSinceLastTweet < 17.25) {
-    return;
+  if (hoursSinceLastTweet > 17.25) {
+    console.log(`timeline has ${content.length} tweets`);
+  
+    var headline = getNewHeadline(tweets, headlines);
+  
+    console.log(`update: ${headline}`);
+    
+    var status = {status: headline};
+    
+    var tweet = await postStatusUpdate(twitter, status);
+  
+    console.log(`tweet id ${tweet.id}`);
   }
   
-  console.log(`timeline has ${content.length} tweets`);
-
-  var headline = getNewHeadline(tweets, headlines);
-
-  console.log(`update: ${headline}`);
-  
-  var status = {status: headline};
-  
-  var tweet = await postStatusUpdate(twitter, status);
-
-  console.log(`tweet id ${tweet.id}`);
-
   console.log(`done`);
 }
 
